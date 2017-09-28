@@ -1,12 +1,17 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 
-import { addTodo, removeTodo } from './store/actions'
+import { addTodo, removeTodo, getTodos } from './store/actions'
 import TodoItem from './TodoItem'
 
 
 class TodoList extends Component {
   state = { newTodo: '' }
+
+  componentDidMount = () => {
+    this.props.getTodos()
+  }
+
 
   handleSubmit = (ev) => {
     ev.preventDefault()
@@ -45,7 +50,8 @@ const mapStateToProps = state => {
 const mapDispatchToProps = dispatch => {
   return {
     addTodo: item => dispatch(addTodo(item)),
-    removeTodo: item => dispatch(removeTodo(item))
+    removeTodo: item => dispatch(removeTodo(item)),
+    getTodos: () => dispatch(getTodos())
   }
 }
 
