@@ -8,7 +8,8 @@ import TodoItem from './TodoItem'
 class TodoList extends Component {
   state = { newTodo: '' }
 
-  handleAddTodo = () => {
+  handleSubmit = (ev) => {
+    ev.preventDefault()
     this.props.addTodo(this.state.newTodo)
     this.setState({ newTodo: '' })
   }
@@ -27,7 +28,9 @@ class TodoList extends Component {
             todos.map((todo, key) => <TodoItem key={key} item={todo} removeTodo={removeTodo} />)
           }
         </ul>
-        <input value={this.state.newTodo} onChange={this.handleNewTodo} placeholder='Add new Todo' /><button onClick={this.handleAddTodo}>OK</button>
+        <form onSubmit={this.handleSubmit}>
+          <input value={this.state.newTodo} onChange={this.handleNewTodo} placeholder='Add new Todo' /><button type='submit'>OK</button>
+        </form>
       </div>
     )
   }
@@ -45,4 +48,5 @@ const mapDispatchToProps = dispatch => {
     removeTodo: item => dispatch(removeTodo(item))
   }
 }
+
 export default connect(mapStateToProps, mapDispatchToProps)(TodoList)
