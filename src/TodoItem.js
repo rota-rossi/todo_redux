@@ -1,9 +1,9 @@
 import React, { Component } from 'react'
 
-export default class TodoItem extends Component {
-  render() {
-    return (
-      <li>{this.props.item}</li>
-    )
-  }
+const TodoItem = ({ item, removeTodo }) => {
+  return (
+    <li>{item} <button onClick={() => removeTodo(item)}>X</button></li>
+  )
 }
+
+export default TodoItem

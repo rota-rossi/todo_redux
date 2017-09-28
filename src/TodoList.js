@@ -1,20 +1,33 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 
+import { addTodo, removeTodo } from './store/actions'
 import TodoItem from './TodoItem'
 
 
 class TodoList extends Component {
+  state = { newTodo: '' }
+
+  handleAddTodo = () => {
+    this.props.addTodo(this.state.newTodo)
+    this.setState({ newTodo: '' })
+  }
+
+  handleNewTodo = (ev) => {
+    this.setState({ newTodo: ev.target.value })
+  }
+
   render() {
-    let { todos } = this.props
+    let { todos, addTodo, removeTodo } = this.props
     return (
       <div>
         <h1>The Ugliest TODO LIST Ever!</h1>
         <ul>
           {
-            todos.map((todo, key) => <TodoItem key={key} item={todo} />)
+            todos.map((todo, key) => <TodoItem key={key} item={todo} removeTodo={removeTodo} />)
           }
         </ul>
+        <input value={this.state.newTodo} onChange={this.handleNewTodo} placeholder='Add new Todo' /><button onClick={this.handleAddTodo}>OK</button>
       </div>
     )
   }
@@ -26,4 +39,10 @@ const mapStateToProps = state => {
   }
 }
 
-export default connect(mapStateToProps)(TodoList)
+const mapDispatchToProps = dispatch => {
+  return {
+    addTodo: item => dispatch(addTodo(item)),
+    removeTodo: item => dispatch(removeTodo(item))
+  }
+}
+export default connect(mapStateToProps, mapDispatchToProps)(TodoList)
