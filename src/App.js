@@ -11,7 +11,14 @@ import TodoList from './TodoList'
 
 const sagaMiddleware = createSagaMiddleware()
 
-let store = createStore(todoReducer, applyMiddleware(sagaMiddleware))
+const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
+
+let store = createStore(
+  todoReducer,
+  composeEnhancers(
+    applyMiddleware(sagaMiddleware)
+  )
+)
 
 sagaMiddleware.run(rootSaga)
 

@@ -11,7 +11,6 @@ function todoReducer(state = [], action) {
     case 'SET_TODOS':
       return action.value
     case 'ADD_TODO':
-      console.log('add todo triggered')
       return [...state, action.item]
     case 'REMOVE_TODO':
       return state.filter(item => item !== action.item)
@@ -19,7 +18,7 @@ function todoReducer(state = [], action) {
       console.log('DATA PERSISTED!')
       return state
     case 'REMOVED':
-      console.log('Removed')
+      console.log('REMOVED!')
       return state
     default:
       return state
